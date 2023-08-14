@@ -4,15 +4,17 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        
-        bool bo= IsPowerOfThree(15);
-        Console.WriteLine(bo.ToString());
+
+        //bool boo= IsPowerOfThree(45);
+        //Console.WriteLine(boo.ToString());
         int[] nums = { 0, 12, 0, 1, 3 };
         MoveZeroes(nums);
-        int[] num = { 2, 2, 1 };
-        //int[] num = { 4, 1, 2, 1, 2 };
-        int n=  SingleNumber(num);
-        Console.WriteLine(n);
+        //int[] num = { 2, 2, 1 };
+        ////int[] num = { 4, 1, 2, 1, 2 };
+        //int n=  SingleNumber(num);
+        //Console.WriteLine(n);
+
+
     }
     /// <summary>
     /// 輸入一個整數陣列，每個數字都會出現兩次，只有一個數字不是，找出那單一的數字。 
@@ -20,29 +22,15 @@ internal class Program
     /// </summary>
     public static int SingleNumber(int[] numbers)
     {
-        for (int i = 0; i < numbers.Length; i++)
+        int singleNumber = 0;
+
+        foreach (int num in numbers)
         {
-            for (int j = i + 1;j < numbers.Length; j++)
-            {
-                if (numbers[i] != 0)
-                {
-                    if (numbers[i] == numbers[j])
-                    {
-                        numbers[i] = 0; 
-                        numbers[j] = 0;
-                    }
-                }
-              
-            }
+            singleNumber ^= num;
         }
-        foreach(int num in numbers)
-        {
-            if (num != 0)
-            {
-                return num;
-            }
-        }
-        return 0;
+
+        return singleNumber;
+
 
     }
     /// <summary>
@@ -50,7 +38,18 @@ internal class Program
     /// </summary>
     public static bool IsPowerOfThree(int n)
     {
-         return n % 3 == 0;
+         if (n <= 0)
+         {
+            return false;
+         }
+         else
+         {
+            while (n % 3 == 0)
+            {
+                n /= 3;
+            }
+            return n == 1;
+         }
     }
     /// <summary>
     /// 將數字陣列裡所有0的元素移到最後面
@@ -60,22 +59,24 @@ internal class Program
 
     public static void MoveZeroes(int[] nums)
     {
-        for(int j=0;j<nums.Length-1; j++) 
+        int noZeroIndex=0;
+
+        for (int i = 0; i < nums .Length; i++)
         {
-            for (int i = 0; i < nums.Length-1 ; i++)
+            if (nums[i] != 0)
             {
-                if (nums[i] == 0)
+                if (i != noZeroIndex)
                 {
-                    (nums[i], nums[i + 1]) = (nums[i + 1], nums[i]);
+                    (nums[i], nums[noZeroIndex]) = (nums[noZeroIndex], nums[i]);
                 }
+                noZeroIndex++;
             }
         }
+         
         foreach(int n in nums)
         {
             Console.WriteLine(n);
         }
         Console.ReadLine();
-        
     }
-
 }
